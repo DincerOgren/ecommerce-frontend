@@ -3,12 +3,16 @@ import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../Store/actions";
+import Filter from "./Filter";
 
 
 const Products = () => {
 
-    const isLoading = false;
-    const errorMessage ="";
+    const {isLoading,errorMessage} = useSelector(
+        (state) => state.errors
+    )
+    // const isLoading = false;
+    // const errorMessage ="";
 
     const {products} = useSelector(
         (state) => state.products
@@ -46,6 +50,7 @@ const Products = () => {
 
     return (
         <div className="lg:px-14 sm:px-4 py-14 px-4 2xl:w-[90%] 2xl:mx-auto ">
+            <Filter/>
             {isLoading ? (
                 <p>Loading...</p>
             ): errorMessage ? (
