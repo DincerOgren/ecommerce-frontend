@@ -3,17 +3,20 @@ import { useEffect, useState } from "react";
 import { FaArrowDown, FaArrowUp, FaSearch, FaSearchengin } from "react-icons/fa";
 import {FiRefreshCcw} from "react-icons/fi";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-const Filter = () => {
+
+
+const Filter = ({categories}) => {
     
-    const categories = [
+    // Hard coded state for test purposes.
+    // const categories = [
 
-        {categoryId:1 , categoryName:"Cat1"},
-        {categoryId:2 , categoryName:"Cat2"},
-        {categoryId:3 , categoryName:"Cat3"},
-        {categoryId:4 , categoryName:"Cat4"},
-        {categoryId:5 , categoryName:"Cat5"},
+    //     {categoryId:1 , categoryName:"Cat1"},
+    //     {categoryId:2 , categoryName:"Cat2"},
+    //     {categoryId:3 , categoryName:"Cat3"},
+    //     {categoryId:4 , categoryName:"Cat4"},
+    //     {categoryId:5 , categoryName:"Cat5"},
 
-    ]
+    // ]
 
     const [searchParams]=useSearchParams();
     const params=new URLSearchParams(searchParams);
@@ -35,7 +38,7 @@ const Filter = () => {
         setSortOrder(currentSortOrder);
         setSearchTerm(currentSearchTerm);
 
-        console.log(searchTerm,"asdfsfd")
+        console.log(searchTerm,":searchTerm")
     }, [searchParams])
 
 

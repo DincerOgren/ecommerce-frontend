@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { fetchProducts } from "../Store/actions";
 
 const useProductFilter=()=>{
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
 
     useEffect(()=>{
+        
         const params = new URLSearchParams();
 
         const currentPage = searchParams.get("page")
@@ -26,11 +28,15 @@ const useProductFilter=()=>{
         }
         
         if(keyword){
-            params.entries("keyword",keyword);
+            params.set("keyword",keyword);
         }
 
+        console.log("Keyword?:",keyword)
+        console.log("Keyowrdparam: ",searchParams.get("keyword"))
         const queryString = params.toString();
         console.log("query String",queryString);
+
+        dispatch(fetchProducts(queryString))
 
     },[dispatch,searchParams])
 }
