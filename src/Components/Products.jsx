@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { fetchCategories } from "../Store/actions";
 import Filter from "./Filter";
 import useProductFilter from "./useProductFilter";
+import { ThreeCircles } from "react-loader-spinner";
+import Loader from "./Loader";
+import Paginations from "./Paginations";
 
 
 const Products = () => {
@@ -15,7 +18,7 @@ const Products = () => {
     // const isLoading = false;
     // const errorMessage ="";
 
-    const {products,categories} = useSelector(
+    const {products,categories,pagination} = useSelector(
         (state) => state.products
     )
     
@@ -56,7 +59,7 @@ const Products = () => {
         <div className="lg:px-14 sm:px-4 py-14 px-4 2xl:w-[90%] 2xl:mx-auto ">
            <Filter categories={categories || []} />
             {isLoading ? (
-                <p>Loading...</p>
+                <Loader/>
             ): errorMessage ? (
                 <div className="flex justify-center items-center h-[200px]">
                     <FaExclamation className="text-slate-600 text-3xl mr-2"/>
@@ -68,6 +71,12 @@ const Products = () => {
                         {products && 
                         products.map((item,i)=> <ProductCard key={i} {...item   } />)}
                          
+                    </div>
+                    <div className="flex justify-center pt-10">
+                        <Paginations 
+                            totalPageCount={pagination?.totalPages}
+                            totalProductCount={pagination?.totalElements}
+                                     />
                     </div>
                 </div>
             )}
