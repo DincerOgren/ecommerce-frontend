@@ -3,15 +3,21 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { FaBeer } from 'react-icons/fa'
-import Products from './Components/Products'
+import Products from './Components/products/Products'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './Components/home/Home'
+import Navbar from './Components/shared/Navbar'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <Products/> 
-    </>
+    <Router>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/products' element={<Products/>}/>
+      </Routes>
+    </Router>
   )
 }
 
