@@ -15,6 +15,7 @@ const ProductCard = ({
             price,
             discount,
             specialPrice,
+            about = false
 }) => {
 
     const [openProductViewModel,setOpenProductViewModel] = useState(false);
@@ -23,9 +24,13 @@ const ProductCard = ({
     const isAvailable=quantity && Number(quantity) > 0; 
     
     const handleProductView=(product) =>{
-        setSelectedViewProduct(product);
-        setOpenProductViewModel(true);
-        console.log(product)
+        
+        if(!about){
+
+            setSelectedViewProduct(product);
+            setOpenProductViewModel(true);
+            console.log(product)
+        }
     }
 
     return (
@@ -68,6 +73,9 @@ const ProductCard = ({
                 <div className="min-h-20 max-h-20">
                     <p className="text-gray-600 text-sm">{truncateText(description,80)}</p>
                 </div>
+                
+            {!about && 
+            
                 <div className="flex justify-between items-center">
                 {specialPrice ? (
                     <div className="flex flex-col">
@@ -85,15 +93,20 @@ const ProductCard = ({
                     </span>
                 )}
 
-                <button
-                    disabled={!isAvailable || btnLoader}
-                    className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"}
-                            text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}>
-                    <FaShoppingCart className="mr-2"/>
-                    {isAvailable ? "Add to Cart" : "Stock Out"}
                
-                </button>
+                    <button
+                    
+                        disabled={!isAvailable || btnLoader}
+                        className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"}
+                                text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}>
+                        <FaShoppingCart className="mr-2"/>
+                        {isAvailable ? "Add to Cart" : "Stock Out"}
+               
+                    </button>
+               
+                
                </div>
+            }
             </div>
             <ProductViewModel 
                 open = {openProductViewModel}
