@@ -2,6 +2,10 @@ import { useState } from "react"
 import { HiOutlineTrash } from "react-icons/hi";
 import SetQuantity from "./SetQuantity";
 import { useDispatch } from "react-redux";
+import { decreaseCartQuantity, increaseCartQuantity } from "../../Store/actions";
+import toast from "react-hot-toast";
+import { formatPrice } from "../../utils/formatPrice";
+import truncateText from "../../utils/truncateText";
 
 const ItemContent = ({
         productId,
@@ -26,12 +30,24 @@ const ItemContent = ({
                 
             ))
         }
+
+        const handleQuantityDecrease = (cartItems) =>{
+            if(currentQuantity >1){
+                const newQuantity = currentQuantity-1;
+                setCurrentQuantity(newQuantity);
+                dispatch(decreaseCartQuantity(cartItems,newQuantity))
+            }
+        }
+
+        const removeItemFromCart = (cartItems) =>{
+            dispatch(removeItemFromCart(cartItems,toast))
+        }
     return(
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4   items-center  border-[1px] border-slate-200  rounded-md  lg:px-4  py-4 p-2">
             <div className="md:col-span-2 justify-self-start flex  flex-col gap-2 ">
                 <div className="flex md:flex-row flex-col lg:gap-4 sm:gap-3 gap-0 items-start ">
                     <h3 className="lg:text-[17px] text-sm font-semibold text-slate-600">
-                        {productName}
+                        {truncateText(productName,25)}
                     </h3>
                 </div>
 
@@ -44,7 +60,15 @@ const ItemContent = ({
 
                     <div className="flex items-start gap-5 mt-3">
                         <button 
-                            onClick={()=>{}}
+                            onClick={()=>removeItemFromCart({
+                                image,
+                                productName,
+                                description,
+                                specialPrice,
+                                price,
+                                productId,
+                                quantity 
+                            })}
                             className="flex items-center font-semibold space-x-2 px-4 py-1 text-xs border-rose-600 text-rose-600 rounded-md hover:bg-red-50 transition-colors duration-200">
                             <HiOutlineTrash size={16}/>
                             Remove
@@ -55,7 +79,7 @@ const ItemContent = ({
             
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
 
-                {Number(specialPrice).toFixed(2)}
+                {formatPrice(Number(specialPrice))}
 
             </div>
 
@@ -65,6 +89,7 @@ const ItemContent = ({
                     quantity={currentQuantity}
                     cardCounter={true}
                     handleQtyIncrease={()=>handleQuantityIncrease(
+                    {
                         image,
                         productName,
                         description,
@@ -72,14 +97,25 @@ const ItemContent = ({
                         price,
                         productId,
                         quantity
+                    }
                     )}        
-                    handleQtyDecrease={()=>{}}/>
+                    handleQtyDecrease={()=>handleQuantityDecrease(
+                        {
+                            image,
+                            productName,
+                            description,
+                            specialPrice,
+                            price,
+                            productId,
+                            quantity
+                        }
+                    )}/>
 
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-
-                {Number(currentQuantity)*Number(specialPrice).toFixed(2)}
+                
+                {formatPrice(Number(currentQuantity)*Number(specialPrice))}
 
             </div>
 

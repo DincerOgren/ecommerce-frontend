@@ -82,22 +82,50 @@ export const increaseCartQuantity = (data,toast,currentQuantity,setCurrentQuanti
     (dispatch,getState) => {
 
         const {products} = getState().products
+        console.log(getState())
         const getProduct = products.find(
             (item) => item.productId === data.productId
         );
 
         const isQuantityExist = getProduct.quantity >= currentQuantity + 1;
-        
+        console.log("SAAAAAAAA")
         if(isQuantityExist){
             const newQuantity = currentQuantity+1;
             setCurrentQuantity(newQuantity);
-
+            console.log("ASSSSSSSSS")
+            
+            console.log("new quantity" ,newQuantity, currentQuantity , "current")
             dispatch({
                 type: "ADD_CART",
-                payload: {...data,quantity:newQuantity}
+                payload: {...data, quantity:newQuantity},
             })
+            localStorage.setItem("cartItems",JSON.stringify(getState().carts.cart))
         } else{
             toast.error("Quantity Reached the Limit.")
         }
 
+}
+
+export const decreaseCartQuantity = (data,newQuantity) => (dispatch,getState) => {
+    
+    dispatch({
+        type:"ADD_CART",
+        payload:{...data, quantity: newQuantity}
+    });
+    localStorage.setItem("cartItems",JSON.stringify(getState().carts.cart));
+}
+
+
+export const removeFromCart = (data,toast) => 
+    (dispatch, getState)=>{
+
+
+          const newProducts = products.remove(getProduct)
+            dispatch({ 
+                type: "REMOVE_CART",
+                payload: data,
+            })
+            toast.success(`${data.productName} removed from the cart.`)
+            localStorage.setItem("cartItems",JSON.stringify(getState().carts.cart))
+    
 }
