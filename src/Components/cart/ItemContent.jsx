@@ -2,7 +2,7 @@ import { useState } from "react"
 import { HiOutlineTrash } from "react-icons/hi";
 import SetQuantity from "./SetQuantity";
 import { useDispatch } from "react-redux";
-import { decreaseCartQuantity, increaseCartQuantity } from "../../Store/actions";
+import { decreaseCartQuantity, increaseCartQuantity, removeFromCart } from "../../Store/actions";
 import toast from "react-hot-toast";
 import { formatPrice } from "../../utils/formatPrice";
 import truncateText from "../../utils/truncateText";
@@ -40,7 +40,7 @@ const ItemContent = ({
         }
 
         const removeItemFromCart = (cartItems) =>{
-            dispatch(removeItemFromCart(cartItems,toast))
+            dispatch(removeFromCart(cartItems,toast))
         }
     return(
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4   items-center  border-[1px] border-slate-200  rounded-md  lg:px-4  py-4 p-2">

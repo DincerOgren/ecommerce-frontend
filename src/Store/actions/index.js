@@ -88,11 +88,9 @@ export const increaseCartQuantity = (data,toast,currentQuantity,setCurrentQuanti
         );
 
         const isQuantityExist = getProduct.quantity >= currentQuantity + 1;
-        console.log("SAAAAAAAA")
         if(isQuantityExist){
             const newQuantity = currentQuantity+1;
             setCurrentQuantity(newQuantity);
-            console.log("ASSSSSSSSS")
             
             console.log("new quantity" ,newQuantity, currentQuantity , "current")
             dispatch({
@@ -119,8 +117,7 @@ export const decreaseCartQuantity = (data,newQuantity) => (dispatch,getState) =>
 export const removeFromCart = (data,toast) => 
     (dispatch, getState)=>{
 
-
-          const newProducts = products.remove(getProduct)
+        
             dispatch({ 
                 type: "REMOVE_CART",
                 payload: data,
@@ -128,4 +125,29 @@ export const removeFromCart = (data,toast) =>
             toast.success(`${data.productName} removed from the cart.`)
             localStorage.setItem("cartItems",JSON.stringify(getState().carts.cart))
     
+}
+
+
+export const authenticateSignInUser = (sendData,toast,reset,navigate,setLoader)=> async (dispatch) =>{
+
+    try {
+        setLoader(true);
+        const { data } = await api.post("/auth/signin",sendData)
+        
+        dispatch({
+
+            type: "LOGIN_USER",
+            payload: data   
+        })
+
+        localStorage.setItem("auth",JSON.stringify(data));
+        reset();
+        toast.success("Login successful")
+        navigate("/");
+    } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message || "Internal server error")
+    } finally {
+        setLoader(false);
+    }
 }

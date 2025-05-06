@@ -11,6 +11,7 @@ import About from './Components/About'
 import Contact from './Components/Contact'
 import { Toaster } from 'react-hot-toast'
 import Cart from './Components/cart/Cart'
+import Login from './Components/auth/Login'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/cart' element={<Cart/>}/>
+          <Route path='/login' element={<Login/>}/>
         </Routes>
       </Router>
       <Toaster position='bottom-center'/>
