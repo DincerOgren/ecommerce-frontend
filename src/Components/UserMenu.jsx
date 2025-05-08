@@ -1,10 +1,13 @@
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
+import BackDrop from "./BackDrop";
+import { logoutUser } from "../Store/actions";
+import toast from "react-hot-toast";
 
 const UserMenu = ()=>{
     
@@ -18,8 +21,10 @@ const UserMenu = ()=>{
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const dispatch = useDispatch()
+    const navigate= useNavigate()
     const logOutHandler = () => {
-       
+       dispatch(logoutUser(toast,navigate))
     };
   return (
     <div>
@@ -69,6 +74,8 @@ const UserMenu = ()=>{
         </Link>
 
       </Menu>
+
+      {open && <BackDrop/> }
     </div>
   );
     

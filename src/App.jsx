@@ -12,6 +12,8 @@ import Contact from './Components/Contact'
 import { Toaster } from 'react-hot-toast'
 import Cart from './Components/cart/Cart'
 import Login from './Components/auth/Login'
+import PrivateRoute from './Components/PrivateRoute'
+import Register from './Components/auth/Register'
 
 function App() {
 
@@ -26,7 +28,11 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/cart' element={<Cart/>}/>
-          <Route path='/login' element={<Login/>}/>
+          
+          <Route path='/' element={<PrivateRoute publicPage/>}>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Register/>}/>
+          </Route>
         </Routes>
       </Router>
       <Toaster position='bottom-center'/>
