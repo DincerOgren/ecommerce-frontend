@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoMdExit } from "react-icons/io";
 import BackDrop from "./BackDrop";
-import { logoutUser } from "../Store/actions";
+import { logOutUser } from "../Store/actions";
 import toast from "react-hot-toast";
 
 const UserMenu = ()=>{
@@ -22,9 +22,10 @@ const UserMenu = ()=>{
         setAnchorEl(null);
     };
     const dispatch = useDispatch()
-    const navigate= useNavigate()
+    const navigate = useNavigate()
+
     const logOutHandler = () => {
-       dispatch(logoutUser(toast,navigate))
+       dispatch(logOutUser(toast,navigate))
     };
   return (
     <div>
@@ -54,7 +55,7 @@ const UserMenu = ()=>{
             </MenuItem>
         </Link>
         <Link to="/profile/order">
-            <MenuItem onClick={handleClose}>
+            <MenuItem className="flex gap-2" onClick={handleClose}>
                 <FaShoppingCart className="text-xl"/>
                 <span className="font-semibold text-[16px] mt-1">
                     Order

@@ -6,6 +6,7 @@ import InputField from "../shared/inputField";
 import { useDispatch } from "react-redux";
 import { registerNewUser } from "../../Store/actions";
 import toast from "react-hot-toast";
+import Spinner from "../shared/Spinner";
 
 
 const Register = () => {
@@ -81,7 +82,9 @@ const Register = () => {
                                 w-full py-2 hover:text-slate-400 transition-colors  duration-100 rounded-sm my-3"
                         type="submit">
                             {loader ? (
-                                <>Loading...</>
+                                <>
+                                    <Spinner/>Loading...
+                                </>
                             ):(
                                 
                                 <>Register</>

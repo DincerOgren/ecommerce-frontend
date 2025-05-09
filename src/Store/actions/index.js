@@ -169,14 +169,15 @@ export const registerNewUser = (sendData,toast,reset,navigate,setLoader)=> async
     }
 }
 
-export const logoutUser =(toast,navigate) => async (dispatch)=> {
+export const logOutUser =(toast,navigate) => (dispatch)=> {
     
 
     dispatch({
         type:"LOGOUT_USER"
     })
     localStorage.removeItem("auth");
+    
     toast.success("User logout succesfully")
-    navigate("/")
+    setTimeout(() => navigate("/login"), 0); // NORMAL NAVIGATE IS NOT WORKING WHY IS THAT????????????
 
 }

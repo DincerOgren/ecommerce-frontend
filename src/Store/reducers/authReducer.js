@@ -17,10 +17,8 @@ export const authReducer = (state = initialState,action) =>{
                 user:newUser
             }
         case "LOGOUT_USER":
-            const emptyUser = null;
             return{
-                ...state,
-                user:emptyUser,
+                user:null,
                 address:null
             }
     
