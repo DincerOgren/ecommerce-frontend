@@ -181,3 +181,30 @@ export const logOutUser =(toast,navigate) => (dispatch)=> {
     setTimeout(() => navigate("/login"), 0); // NORMAL NAVIGATE IS NOT WORKING WHY IS THAT????????????
 
 }
+
+export const addUpdateUserAddress =
+    (sendData,toast,addressId,setOpen) => 
+    async (dispatch,getState) =>{
+
+    //const {user} = getState().auth
+    dispatch({
+        type:"BUTTON_LOADER"
+    })
+
+    try {
+        const { data } = await api.post("/addresses",sendData)
+        
+        toast.success("Address saved successfully")
+        dispatch({type:"IS_SUCCESS"})
+    } catch (error) {
+         dispatch({
+            type:"IS_ERROR",
+            payload:null
+        })
+        console.log(error);
+        toast.error(error.response.data.message || "Internal server error")
+    } finally {
+        setOpen(false);
+    }
+        
+}

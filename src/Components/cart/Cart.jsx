@@ -65,7 +65,7 @@ const Cart = () =>{
                         Taxes and shipping calculated at checkout
                     </p>
 
-                    <Link>
+                    <Link to="/checkout">
                         <button onClick={()=>{}}
                                 className="font-semibold w-[300px] py-2 px-4 rounded-sm bg-customBlue 
                                 text-white flex items-center justify-center gap-2 hover:text-gray-300 transition duration-500">
