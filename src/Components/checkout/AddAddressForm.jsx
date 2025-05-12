@@ -6,6 +6,7 @@ import Spinner from '../shared/Spinner'
 import { Link } from 'react-router-dom'
 import { addUpdateUserAddress } from '../../Store/actions'
 import toast from 'react-hot-toast'
+import { useEffect } from 'react'
 
 const AddAddressForm = ({address,setOpenAddressModal}) => {
 
@@ -15,6 +16,7 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
             register,
             handleSubmit,
             reset,
+            setValue,
             formState: {errors},
         } = useForm({
             mode: "onTouched"
@@ -31,6 +33,15 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
 
             ))
         }
+
+        useEffect(()=>{
+            if (address?.addressId) {
+                setValue("street",address?.street)
+                setValue("city",address?.city)
+                setValue("country",address?.country)
+                setValue("state",address?.state)
+            }
+        },[address])
   return (
     <div className="">
                 <form
@@ -38,7 +49,7 @@ const AddAddressForm = ({address,setOpenAddressModal}) => {
                     className="">
                         <div className="flex justify-center items-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4">
                             <FaAddressCard className="mr-2 text-2xl "/>
-                            Add Address
+                            {!address?.addressId ? "Add Address" : "Update Address"}
                         </div>
                     
                     <div className="flex flex-col gap-4">

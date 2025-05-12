@@ -1,6 +1,7 @@
 const initialState= {
     user: null,
     address: [],
+    selectedUserAddress: null
 
 }
 
@@ -19,7 +20,18 @@ export const authReducer = (state = initialState,action) =>{
         case "LOGOUT_USER":
             return{
                 user:null,
-                address:null
+                address:null,
+                selectedUserAddress:null
+            }
+        case "FETCH_USER_ADDRESSES":
+            return{
+                ...state,
+                address:action.payload
+            }
+        case "SELECT_CHECKOUT_ADDRESS":
+            return{
+                ...state,
+                selectedUserAddress:action.payload
             }
     
         default:
