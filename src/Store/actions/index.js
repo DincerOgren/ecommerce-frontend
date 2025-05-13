@@ -240,3 +240,39 @@ export const selectUserCheckoutAdress=(address)=>{
         payload:address
     }
 }
+
+export const clearSelectedUserAddress = ()=>{
+    return{type:"REMOVE_CHECKOUT_ADDRESS"}
+}
+
+export const deleteUserAddress = (sendAddressId,toast,setOpenDeleteModal) => async(dispatch,getState)=>{
+
+    try {
+        dispatch({type:"BUTTON_LOADER"})
+        await api.delete(`/addresses/${sendAddressId}`)
+        dispatch({ 
+            type:"FETCH_USER_ADDRESSES",
+            payload: data
+        })
+        dispatch({type:"IS_SUCCESS"})
+        dispatch(getUserAddresses())
+        dispatch(clearSelectedUserAddress())
+        toast.success("Address deleted successfully")
+
+    } catch (error) {
+        dispatch({ 
+            type: "IS_ERROR",
+            payload: error?.response?.data?.message || "Error Occured!"
+        })
+    }
+    finally{
+        setOpenDeleteModal(false)
+    }
+}
+
+export const updatePaymentMethod = (method) =>{
+    return{
+        type:"UPDATE_PAYMENT_METHOD",
+        payload:method
+    }
+}

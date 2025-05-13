@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectUserCheckoutAdress } from '../../Store/actions'
 
 const AddressList = ( {
-        addresses,setSelectedAddress,setOpenAddressModal }) => {
+        addresses,setSelectedAddress,setOpenAddressModal,setOpenAddressDeleteModal}) => {
   
     const dispatch = useDispatch()
     const {selectedUserAddress} = useSelector((state)=>state.auth)
@@ -18,6 +18,7 @@ const AddressList = ( {
     
     const onDeleteButtonHandler = (address) =>{
         setSelectedAddress(address)
+        setOpenAddressDeleteModal(true)
     }
 
     const handleAddressSelection = (address) =>{
