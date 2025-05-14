@@ -88,7 +88,7 @@ const AddressInfo = ({address}) => {
             setOpen = {setOpenAddressModal}>
                 <AddAddressForm
                     address={selectedAddress}
-                    setOpen={setOpenAddressModal}/>
+                    setOpenAddressModal={setOpenAddressModal}/>
         </AddressInfoModal>
 
         <AddressDeleteModal 

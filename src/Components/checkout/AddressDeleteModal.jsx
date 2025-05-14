@@ -1,5 +1,5 @@
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
-import React from 'react'
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { FaExclamationTriangle, FaTimes } from 'react-icons/fa'
 
 export const AddressDeleteModal = ({
   open,

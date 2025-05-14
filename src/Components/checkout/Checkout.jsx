@@ -6,6 +6,9 @@ import { getUserAddresses } from "../../Store/actions";
 import Skeleton from "../shared/Skeleton";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
+import StripePayment from "./StripePayment";
+import PaypalPayment from "./PaypalPayment";
 
 const Checkout = () => {
 
@@ -14,7 +17,9 @@ const Checkout = () => {
 
     const {address,selectedUserAddress} = useSelector((state)=> state.auth)
 
-    const paymentMethod = false
+    const {paymentMethod} = useSelector((state)=>state.payment)
+
+    const {cart,totalPrice} = useSelector((state)=>state.carts)
 
     const [activeStep,setActiveStep] = useState(0);
 
@@ -65,6 +70,20 @@ const Checkout = () => {
             <div className="mt-5">
                 {activeStep === 0 && <AddressInfo address={address}/>}
                 {activeStep === 1 && <PaymentMethod/>}
+                {activeStep === 2 && <OrderSummary
+                                            totalPrice={totalPrice}
+                                            address={address}
+                                            cart={cart}
+                                            paymentMethod={paymentMethod}/>}
+                {activeStep === 3 && 
+                    <>
+                        {paymentMethod === "Stripe" ? (
+                            <StripePayment/>
+                        )
+                        : (
+                            <PaypalPayment/>
+                        )}
+                    </>}
             </div>
         )}
 
@@ -97,7 +116,7 @@ const Checkout = () => {
                             : ""
                         }`}
                         onClick={handleNext}>
-
+                            Next
                     </button>
                 )}
             
