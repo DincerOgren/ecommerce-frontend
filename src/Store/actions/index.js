@@ -235,6 +235,7 @@ export const getUserAddresses = () => async (dispatch,getState) => {
 }
 
 export const selectUserCheckoutAdress=(address)=>{
+    localStorage.setItem("CHECKOUT_ADDRESS",JSON.stringify(address))
     return {
         type:"SELECT_CHECKOUT_ADDRESS",
         payload:address
@@ -271,6 +272,8 @@ export const deleteUserAddress = (sendAddressId,toast,setOpenDeleteModal) => asy
 }
 
 export const updatePaymentMethod = (method) =>{
+    
+    localStorage.setItem("PAYMENT_METHOD",method)
     return{
         type:"UPDATE_PAYMENT_METHOD",
         payload:method
@@ -315,5 +318,56 @@ export const getUserCart = () => async (dispatch,getState) => {
             payload: error?.response?.data?.message || "Failed to create cart items!"
         })
         
+    }
+}
+
+export const createStripePaymentSecret = (totalPrice) => async(dispatch,getState) => {
+
+    try {
+        dispatch({type:"IS_FETCHING"})
+
+        const {data} = await api.post("/order/stripe-client-secret",{
+            "amount":Number(totalPrice) * 100,
+            "currency":"usd"
+        })
+
+        dispatch({
+            type:"CLIENT_SECRET",
+            payload:data
+        })
+        localStorage.setItem("client-secret",JSON.stringify(data))
+        dispatch({type:"IS_SUCCESS"})
+        
+    } catch (error) {
+        dispatch({ 
+            type: "IS_ERROR",
+            payload: error?.response?.data?.message || "Failed to create stripe payment!"
+        })
+    }
+}
+
+export const stripePaymentConfirmation = (sendData,setErrorMessage,setLoading,toast) => async(dispatch,getState) => {
+
+    try {
+        const  response = await api.post("/order/users/payments/online",sendData)
+        console.log("ASDFASDFASDGASDFHFADH")
+        console.log(response)
+        if (response.data) {
+            console.log("INSIDE IF")
+            localStorage.removeItem("PAYMENT_METHOD")
+            localStorage.removeItem("CHECKOUT_ADDRESS")
+            localStorage.removeItem("cartItems")
+            localStorage.removeItem("client-secret")
+            dispatch({type: "REMOVE_CLIENT_SECRET_ADDRESS"})
+            dispatch({type: "CLEAR_CART"})
+            toast.success("Order accepted")
+        }
+        else {
+            setErrorMessage("Payment failed, Please try again.")
+        }
+
+      
+    } catch (error) {
+        setErrorMessage("Payment failed, Please try again.")
     }
 }
